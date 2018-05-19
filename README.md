@@ -60,6 +60,18 @@ Feign [feɪn] 伪装,伪Http客户端,负载均衡,可插拔注解
 更通用，可以适用于其他服务注册中心；@EnableEurekaClient只适用于Eureka注册中心
 4. Feign自动做了负载均衡
 
+## 断路器(Hystrix)
+Hystrix [hɪst'rɪks]  豪猪,防御机制,防止雪崩,降级,当服务不可用时的默认方法
+
+1. Feign是自带断路器Hystrix的，配置开启
+    ```
+    feign:
+      hystrix:
+        enabled: true
+    ```
+2. 定义Feign客户端接口ScheduleServiceHi的实现类，在其中编写熔断方法
+3. 在Feign客户端接口ScheduleServiceHi接口中，指定熔断时fallback(后退)的类
+
 -------------
 ## 其他
 ### fatal: refusing to merge unrelated histories
