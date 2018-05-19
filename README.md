@@ -1,21 +1,25 @@
 # Spring Cloud Demo
+
+1. 版本序列Release Trains：为了方便管理Spring Could中各种各样的依赖，制定了
+依赖集合，即版本序列。
+2. 版本序列主要包含Spring Boot和Spring Cloud的版本，具体参考http://projects.spring.io/spring-cloud/
+3. 我的版本号：Spring Cloud:Dalston.SR5,Spring Boot:1.5.13.RELEASE
+4. cannot resolve symbol SpringBootApplication：找不到jar包，造成原因：版本序列不匹配
+如果Spring Cloud:Dalston.SR5,Spring Boot:1.5.13.RELEASE，则不要使用各组件的最新版本。
+如Eureka要使用spring-cloud-starter-eureka-server，而不是spring-cloud-starter-netflix-eureka-client
+5. 创建项目顺序：
+    1. 创建一个Maven项目(类型无所谓，删除src目录)
+    2. 右键项目->New->Module->Spring Initializer->选择组件->...
+
 [TOC]
 ## 服务注册中心与服务提供者(Eureka Server & Client)
 Eureka  [juəˈri:kə] 我发现了,服务注册中心,服务提供者
 
-1. 版本序列Release Trains：为了方便管理Spring Could中各种各样的依赖，制定了
-依赖集合，即版本序列。版本序列主要包含Spring Boot和Spring Cloud的版本，具体参考
-http://projects.spring.io/spring-cloud/
-2. cannot resolve symbol SpringBootApplication：找不到
-Maven: org.springframework.cloud:spring-cloud-netflix-eureka-server，我认为是因为
-Spring Cloud的Dalston.SR5版本序列里找不到spring-cloud-netflix-eureka-server，所以
-我手动添加的<version>1.4.4.RELEASE</version>
-
 ### Eureka Server服务注册中心(eureka-server)
 
-1. File->New->Project->Spring Initializer->Cloud Discovery->Eureka Server
+1. 组件：web、eureka
 2. @EnableEurekaServer注解使其成为服务注册中心Eureka Server
-3. application.yml配置
+3. application.yml配置(不能有中文，这里是注释)
     ```yml
     #服务
     server:
@@ -41,7 +45,7 @@ Spring Cloud的Dalston.SR5版本序列里找不到spring-cloud-netflix-eureka-se
 4. Eureka Server 地址：http://localhost:8761/
 ### Eureka Client服务提供者(eureka-hi)
 
-1. File->New->Project->Spring Initializer->Cloud Discovery->Eureka Server
+1. 组件：web、eureka
 2. @EnableEurekaClient注解表示当前服务是一个服务提供者
 3. 警告信息：
     ```
@@ -54,7 +58,7 @@ Spring Cloud的Dalston.SR5版本序列里找不到spring-cloud-netflix-eureka-se
 ## 服务消费者(Feign)
 Feign [feɪn] 伪装,伪Http客户端,负载均衡,可插拔注解
 
-1. 依赖：Web->Web、Cloud Routing->Eureka Server、Cloud Routing->Feign
+1. 组件：web、eureka、feign
 2. @EnableFeignClients注解表示当前服务开启了Feign功能
 3. @EnableDiscoveryClient表示当前服务是一个消息提供者，比@EnableEurekaClient
 更通用，可以适用于其他服务注册中心；@EnableEurekaClient只适用于Eureka注册中心
@@ -75,11 +79,29 @@ Hystrix [hɪst'rɪks]  豪猪,防御机制,防止雪崩,降级,当服务不可�
 ## 路由网关(Zuul)
 Zuul 负载均衡,路由转发,过滤器
 
-1. 依赖：Web->Web、Cloud Routing->Eureka Server、Cloud Routing->Zuul
+1. 组件：web、eureka、zuul
 2. @EnableEurekaClient注解开启服务注册
 3. @EnableZuulProxy注解开启网关代理
-3. @需要在application.yml中设置失效时间，以解决Zuul导致Hystrix熔断失效的问题
-
+4. @需要在application.yml中设置失效时间，以解决Zuul导致Hystrix熔断失效的问题
+    ```
+    zuul:
+      socket-timeout-millis: 60000
+      connect-timeout-millis: 60000
+      routes:
+        api-a:
+          path: /api-a/**
+          service-id: service-feign
+    ribbon:
+      ReadTimeout: 60000
+      ConnectTimeout: 60000
+    hystrix:
+      command:
+        default:
+          execution:
+            isolation:
+              thread:
+                timeoutInMilliseconds: 60000
+    ```
 
 -------------
 ## 其他
