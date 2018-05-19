@@ -1,5 +1,7 @@
 # Spring Cloud Demo
+[TOC]
 ## 服务注册中心与服务提供者(Eureka Server & Client)
+Eureka  [juəˈri:kə] 我发现了,服务注册中心,服务提供者
 
 1. 版本序列Release Trains：为了方便管理Spring Could中各种各样的依赖，制定了
 依赖集合，即版本序列。版本序列主要包含Spring Boot和Spring Cloud的版本，具体参考
@@ -9,7 +11,7 @@ Maven: org.springframework.cloud:spring-cloud-netflix-eureka-server，我认为�
 Spring Cloud的Dalston.SR5版本序列里找不到spring-cloud-netflix-eureka-server，所以
 我手动添加的<version>1.4.4.RELEASE</version>
 
-### Eureka Server服务注册中心
+### Eureka Server服务注册中心(eureka-server)
 
 1. File->New->Project->Spring Initializer->Cloud Discovery->Eureka Server
 2. @EnableEurekaServer注解使其成为服务注册中心Eureka Server
@@ -37,7 +39,7 @@ Spring Cloud的Dalston.SR5版本序列里找不到spring-cloud-netflix-eureka-se
           default-zone: http://${eureka.instance.hostname}:${server.port}/eureka/
     ```
 4. Eureka Server 地址：http://localhost:8761/
-### Eureka Client服务提供者
+### Eureka Client服务提供者(eureka-hi)
 
 1. File->New->Project->Spring Initializer->Cloud Discovery->Eureka Server
 2. @EnableEurekaClient注解表示当前服务是一个服务提供者
@@ -49,6 +51,14 @@ Spring Cloud的Dalston.SR5版本序列里找不到spring-cloud-netflix-eureka-se
     - 解决方法：  server.renewal-percent-threshold: 0.49
 4. 测试地址：http://localhost:8762/hi?name=David
 
+## 服务消费者(Feign)
+Feign [feɪn] 伪装,伪Http客户端,负载均衡,可插拔注解
+
+1. 依赖：Web->Web、Cloud Routing->Eureka Server、Cloud Routing->Feign
+2. @EnableFeignClients注解表示当前服务开启了Feign功能
+3. @EnableDiscoveryClient表示当前服务是一个消息提供者，比@EnableEurekaClient
+更通用，可以适用于其他服务注册中心；@EnableEurekaClient只适用于Eureka注册中心
+4. Feign自动做了负载均衡
 
 -------------
 ## 其他
