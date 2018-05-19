@@ -1,0 +1,26 @@
+server:
+  port: 8769
+spring:
+  application:
+    name: service-zuul
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761/eureka/
+zuul:
+  socket-timeout-millis: 60000
+  connect-timeout-millis: 60000
+  routes:
+    api-a:
+      path: /api-a/**
+      service-id: service-feign
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000

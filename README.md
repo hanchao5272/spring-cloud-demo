@@ -72,6 +72,15 @@ Hystrix [hɪst'rɪks]  豪猪,防御机制,防止雪崩,降级,当服务不可�
 2. 定义Feign客户端接口ScheduleServiceHi的实现类，在其中编写熔断方法
 3. 在Feign客户端接口ScheduleServiceHi接口中，指定熔断时fallback(后退)的类
 
+## 路由网关(Zuul)
+Zuul 负载均衡,路由转发,过滤器
+
+1. 依赖：Web->Web、Cloud Routing->Eureka Server、Cloud Routing->Zuul
+2. @EnableEurekaClient注解开启服务注册
+3. @EnableZuulProxy注解开启网关代理
+3. @需要在application.yml中设置失效时间，以解决Zuul导致Hystrix熔断失效的问题
+
+
 -------------
 ## 其他
 ### fatal: refusing to merge unrelated histories
