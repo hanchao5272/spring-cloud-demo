@@ -1,0 +1,18 @@
+#spring:application.name=config-server
+#server.port=8888
+#
+#spring.cloud.config.server.git.uri=https://github.com/hanchao5272/spring-cloud-demo/
+#spring.cloud.config.server.git.searchPaths=spring-cloud-config-file
+#spring.cloud.config.label=master
+server:
+  port: 8888
+spring:
+  application:
+    name: config-srver
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/hanchao5272/spring-cloud-demo/
+          search-paths: spring-cloud-config-file
+      label: master
