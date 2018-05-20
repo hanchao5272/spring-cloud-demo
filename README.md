@@ -165,8 +165,11 @@ profile=dev，label=master。最终读取URL：http://localhost:8888/config-clie
     ```
 4. Config-Client读取Config-Server的配置，而Config-Server的配置来自于github
 
+### 配置中心高可用
 
-
+1. 对于Config Client，因为bootstrap.properties的加载是先于
+application.properties的,所以用bootstrap.properties作为配置文件
+2. 之前Config Client配置的Config Server地址是具体IP地址，将其修改服务名，以便负载均衡
 
 
 
