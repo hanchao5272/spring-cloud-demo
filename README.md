@@ -172,6 +172,19 @@ application.properties的,所以用bootstrap.properties作为配置文件
 2. 之前Config Client配置的Config Server地址是具体IP地址，将其修改服务名，以便负载均衡
 
 
+## 服务链路追踪(Sleuth)
+sleuth [slu:θ] 侦探,分析服务间的调用关系
+
+1. 依赖：spring-cloud-starter-zipkin/zipkin-server/zipkin-autoconfigure-ui
+2. @EnableZipkinServer注解表示该服务作为链路追踪中心
+3. @EnableEurekaClient注解表示该服务进行注册
+4. zipkin配置
+    ```yml
+    spring:
+      zipkin:
+        base-url: http://localhost:9411
+    ```
+5. 使用Feign方式消费服务
 
 
 ---
