@@ -114,7 +114,7 @@ Zuul 负载均衡,路由转发,过滤器
 Config,配置
 
 Spring Boot版本降低至1.5.2.RELEASE
-### 配置中心(Config Server,)
+### 配置中心(Config Server,config-server)
 
 1. Config Server相关jar包是spring-cloud-config-server
 2. 注解@EnableConfigServer表示此服务是配置中心
@@ -145,7 +145,7 @@ Spring Boot版本降低至1.5.2.RELEASE
 5. 读取配置文件举例：配置文件名为config-client-dev.yml，则application=config-client，
 profile=dev，label=master。最终读取URL：http://localhost:8888/config-client/dev
 
-### 配置客户端(Config Client)
+### 配置客户端(Config Client,config-client)
 
 1. Config Client相关jar包是spring-cloud-starter-config
 2. 注解@EnableEurekaClient进行服务注册
@@ -177,13 +177,13 @@ sleuth [slu:θ] 侦探,分析服务间的调用关系
 
 ### HTTP模式
 
-#### Sleuth Server
+#### Sleuth Server(zipkin-server)
 
 1. Sleuth Server依赖：zipkin-server/zipkin-autoconfigure-ui
 2. @EnableZipkinServer注解表示该服务作为链路追踪中心
 3. @EnableEurekaClient注解表示该服务进行注册
 
-#### Sleuth Client
+#### Sleuth Client(zipkin-hi/zipkin-ping/zipkin-pong)
 
 1. Sleuth Client依赖：spring-cloud-starter-zipkin/zipkin-server/zipkin-autoconfigure-ui
 2. @EnableEurekaClient注解表示该服务进行注册
@@ -202,6 +202,7 @@ sleuth [slu:θ] 侦探,分析服务间的调用关系
 
 1. Zipkin Client向Zipkin-Server程序发送数据使用的是http的方式通信，每次发送的时候涉及到连接和发送过程，对原有业务接口调用产生较大影响。
 2. 当我们的zipkin-server程序关闭或者重启过程中，因为客户端收集信息的发送采用http的方式会被丢失。
+
 
 
 
