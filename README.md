@@ -175,16 +175,34 @@ application.properties的,所以用bootstrap.properties作为配置文件
 ## 服务链路追踪(Sleuth)
 sleuth [slu:θ] 侦探,分析服务间的调用关系
 
-1. 依赖：spring-cloud-starter-zipkin/zipkin-server/zipkin-autoconfigure-ui
+### HTTP模式
+
+#### Sleuth Server
+
+1. Sleuth Server依赖：zipkin-server/zipkin-autoconfigure-ui
 2. @EnableZipkinServer注解表示该服务作为链路追踪中心
 3. @EnableEurekaClient注解表示该服务进行注册
-4. zipkin配置
+
+#### Sleuth Client
+
+1. Sleuth Client依赖：spring-cloud-starter-zipkin/zipkin-server/zipkin-autoconfigure-ui
+2. @EnableEurekaClient注解表示该服务进行注册
+3. zipkin client配置
     ```yml
-    spring:
+    spring
+      #Zipkin Server服务地址
       zipkin:
         base-url: http://localhost:9411
+      #采样比例(默认0.1)
+      sleuth:
+        sampler:
+          percentage: 1
     ```
-5. 使用Feign方式消费服务
+#### 缺陷
+
+1. Zipkin Client向Zipkin-Server程序发送数据使用的是http的方式通信，每次发送的时候涉及到连接和发送过程，对原有业务接口调用产生较大影响。
+2. 当我们的zipkin-server程序关闭或者重启过程中，因为客户端收集信息的发送采用http的方式会被丢失。
+
 
 
 ---

@@ -20,12 +20,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-zipkin</artifactId>
-            <version>RELEASE</version>
-        </dependency>
-
-        <dependency>
             <groupId>io.zipkin.java</groupId>
             <artifactId>zipkin-server</artifactId>
         </dependency>

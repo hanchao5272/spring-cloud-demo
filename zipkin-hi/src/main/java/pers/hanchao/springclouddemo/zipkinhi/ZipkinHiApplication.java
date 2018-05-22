@@ -7,6 +7,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -35,15 +36,14 @@ public class ZipkinHiApplication {
 	 * @param count
 	 * @return
 	 */
-	@GetMapping("/hi")
-	public String hi(@RequestParam("count") Integer count) throws InterruptedException {
+	@GetMapping("/hi/{count}")
+	public String hi(@PathVariable("count") Integer count) throws InterruptedException {
 		if (count < 0 || count > 3){
 			count = 3;
 		}
 		StringBuilder stringBuilder = new StringBuilder();
 		for(int i = 0; i < count; i++) {
 			String ping = servicePing.pingFromZipkinPing();
-			Thread.sleep(1000);
 			String pong = servicePong.pongFromZipkinPong();
 			Long time = System.currentTimeMillis();
 		    stringBuilder.append("[").append(ping).append("-->").append(pong).append(",time:").append(time).append("]\n");
