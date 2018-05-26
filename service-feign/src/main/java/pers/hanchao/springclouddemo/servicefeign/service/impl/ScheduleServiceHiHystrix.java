@@ -16,6 +16,6 @@ public class ScheduleServiceHiHystrix implements ScheduleServiceHi {
      */
     @Override
     public String sayHiFromServiceHi(String name) {
-        return "Sorry " + name + ",service hi is not available.";
+        return "Sorry " + name + ",service-hi is not available.";
     }
 }

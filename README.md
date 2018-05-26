@@ -116,6 +116,8 @@ Feign [feɪn] 伪装,伪Http客户端,负载均衡,可插拔注解
 ## 断路器(Hystrix,service-feign)
 Hystrix [hɪst'rɪks]  豪猪,防御机制,防止雪崩,降级,当服务不可用时的默认方法
 
+### 断路器(Hystrix,service-feign)
+
 1. Feign是自带断路器Hystrix的，配置开启
     ```
     feign:
@@ -124,6 +126,15 @@ Hystrix [hɪst'rɪks]  豪猪,防御机制,防止雪崩,降级,当服务不可�
     ```
 2. 定义Feign客户端接口ScheduleServiceHi的实现类，在其中编写熔断方法
 3. 在Feign客户端接口ScheduleServiceHi接口中，指定熔断时fallback(后退)的类
+
+### 断路器仪表盘(Hystrix Dashboard,service-feign)
+
+1. jar包引入：hystrix、hystrix-dashboard
+2. 在启动类添加@EnableHystrix、@EnableHystrixDashboard
+3. 通过http://localhost:8765/hystrix.stream 进行服务断路情况流式监控
+4. 通过http://localhost:8765/hystrix 进行服务断路情况仪表盘监控
+5. 仪表盘参数：http://localhost:8765/hystrix.stream、2000、SERVICE-FEIGN
+6. 修改application.yml,添加注册认证，并修改配置为驼峰方式
 
 ## 路由网关(Zuul)
 Zuul 负载均衡,路由转发,过滤器
