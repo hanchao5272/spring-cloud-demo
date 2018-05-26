@@ -2,8 +2,8 @@ server:
   port: 9411
 eureka:
   client:
-    service-url:
-      default-zone: http://localhost:8761/eureka/
+    serviceUrl:
+      defaultZone: http://admin:admin@localhost:8761/eureka/
 spring:
   application:
     name: zipkin-server
