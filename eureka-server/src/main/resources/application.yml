@@ -1,12 +1,19 @@
 server:
   port: 8761
+security:
+  basic:
+    enabled: true
+  user:
+    name: admin
+    password: admin
 eureka:
   instance:
     hostname: localhost
   client:
-    register-with-eureka: false
-    fetch-registry: false
-    service-url:
-      default-zone: http://${eureka.instance.hostname}:${server.port}/eureka/
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${security.user.name}:${security.user.password}@${eureka.instance.hostname}:${server.port}/eureka/
   server:
-    renewal-percent-threshold: 0.49
+    renewalPercentThreshold: 0.49
+

@@ -47,7 +47,6 @@ Eureka  [juəˈri:kə] 我发现了,服务注册中心,服务提供者
 4. Eureka Server 地址：http://localhost:8761/
 
 ### Eureka Server的高可用配置
-做法：给每个实例一个合法的管理service-url
 
 1. 在yml文件中用---来区分多个文件，减少配置文件个数
 2. 多个实例共用一个服务名：spring.application.name=eureka-ha
@@ -69,6 +68,29 @@ Eureka  [juəˈri:kə] 我发现了,服务注册中心,服务提供者
 4. 在IDEA中，分别通过设置不同的Program arguments参数为--spring.profiles.active=peer1、
 --spring.profiles.active=peer2、--spring.profiles.active=peer3启动这三个注册中心服务。
 5. Eureka Server与Eureka Client的配置文件全都采用驼峰命名
+
+### Eureka Server的安全认证
+
+1. 在Eureka Server中添加依赖spring-boot-starter-security
+2. 修改Eureka Server的配置，添加认证配置security
+```
+security:
+  basic:
+    enabled: true
+  user:
+    name: admin
+    password: admin
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${security.user.name}:${security.user.password}@${eureka.instance.hostname}:${server.port}/eureka/
+```
+3. 修改Eureka Client配置，修改defaultZone=http://usr:pwd@host:ip/eureka/
+4. Eureka Server与Eureka Client的配置文件全都采用驼峰命名
 
 ### Eureka Client服务提供者(eureka-hi)
 
