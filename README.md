@@ -12,6 +12,8 @@
     2. 右键项目->New->Module->Spring Initializer->选择组件->...
 
 [TOC]
+
+
 ## 服务注册中心与服务提供者(Eureka)
 Eureka  [juəˈri:kə] 我发现了,服务注册中心,服务提供者
 
@@ -43,6 +45,31 @@ Eureka  [juəˈri:kə] 我发现了,服务注册中心,服务提供者
           default-zone: http://${eureka.instance.hostname}:${server.port}/eureka/
     ```
 4. Eureka Server 地址：http://localhost:8761/
+
+### Eureka Server的高可用配置
+做法：给每个实例一个合法的管理service-url
+
+1. 在yml文件中用---来区分多个文件，减少配置文件个数
+2. 多个实例共用一个服务名：spring.application.name=eureka-ha
+3. 每个实例都需要注册到其他的注册中心：
+    ```
+     server:
+       port: 8771
+     spring:
+       profiles: peer1
+       application:
+         name: eureka-ha
+     eureka:
+       instance:
+         hostname: peer1
+       client:
+         serviceUrl:
+           defaultZone: http://peer2:8772/eureka/,http://peer3:8773/eureka/
+    ```
+4. 在IDEA中，分别通过设置不同的Program arguments参数为--spring.profiles.active=peer1、
+--spring.profiles.active=peer2、--spring.profiles.active=peer3启动这三个注册中心服务。
+5. Eureka Server与Eureka Client的配置文件全都采用驼峰命名
+
 ### Eureka Client服务提供者(eureka-hi)
 
 1. 组件：web、eureka
