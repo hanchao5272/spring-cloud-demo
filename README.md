@@ -136,6 +136,29 @@ Hystrix [hɪst'rɪks]  豪猪,防御机制,防止雪崩,降级,当服务不可�
 5. 仪表盘参数：http://localhost:8765/hystrix.stream、2000、SERVICE-FEIGN
 6. 修改application.yml,添加注册认证，并修改配置为驼峰方式
 
+### 断路器仪表盘聚合(Turbine,service-feign,service-feign-2,service-turbine)
+[ˈtɜ:baɪn] 涡轮机;将若干服务的监测数据聚合起来
+
+1. 注意主类的注解顺序
+2. 引入jar包：starter-turbine、netflix-turbine
+3. 引入注解：@EnableEurekaClient、@EnableTurbine
+4. application.yml配置：
+```
+turbine:
+  aggregator:
+    clusterConfig: default   # 指定聚合哪些集群，多个使用","分割，默认为default。可使用http://.../turbine.stream?cluster={clusterConfig之一}访问
+  appConfig: service-feign,service-feign-2  # 配置Eureka中的serviceId列表，表明监控哪些服务
+  clusterNameExpression: new String("default")
+  # 1. clusterNameExpression指定集群名称，默认表达式appName；此时：turbine.aggregator.clusterConfig需要配置想要监控的应用名称
+  # 2. 当clusterNameExpression: default时，turbine.aggregator.clusterConfig可以不写，因为默认就是default
+  # 3. 当clusterNameExpression: metadata['cluster']时，假设想要监控的应用配置了eureka.instance.metadata-map.cluster: ABC，
+  #    则需要配置，同时turbine.aggregator.clusterConfig: ABC
+```
+5. 驼峰配置
+6. 流访问：http://localhost:8969/turbine.stream
+7. turbine仪表盘访问http://localhost:8865/hystrix ，录入http://localhost:8969/turbine.stream、
+2000、[随便]，点击Monitor Stream
+
 ## 路由网关(Zuul)
 Zuul 负载均衡,路由转发,过滤器
 

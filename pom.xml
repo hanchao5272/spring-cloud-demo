@@ -19,6 +19,10 @@
         <module>zipkin-hi</module>
         <module>zipkin-ping</module>
         <module>zipkin-pong</module>
+        <module>service-feign-2</module>
+        <module>service-turbine</module>
+        <module>eureka-server-ha</module>
+        <module>eureka-hi-ha</module>
     </modules>
 
     <parent>
