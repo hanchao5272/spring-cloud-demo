@@ -274,6 +274,40 @@ profile=dev，label=master。最终读取URL：http://localhost:8888/config-clie
 4. 刷新时无需认证：management.security.enabled=false
 5. 注意将配置写在bootstrap.yml，优先加载
 
+### 5.3.自动刷新/bus/refresh
+
+#### 5.3.1.初始版本：客户端刷新
+
+1. Config Client添加bus-amqp依赖
+2. Config Client添加rabbitmq相关配置
+```
+  # rabbitmq相关配置
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+```
+3. 刷新时，随意对某个Client的服务进行POST操作：/bus/refresh，则其他Client同时被刷新
+4. 缺陷：未被微服务职责单一性，Client应该承担业务，而非配置刷新工作
+5. 缺陷：破坏了个微服务的对等性，被刷新的微服务是特殊的
+6. 缺陷：有一定局限性，如果被刷新的微服务发生变化，则需要另行配置
+7. 改进：对Config Server实施刷新
+
+#### 5.3.2.改进版本：服务端刷新
+
+1. 在上个版本的基础上，对Config Server进行同样的配置
+2. 刷新时，对Config Server进行POST：/bus/refresh
+3. 此种版本下，Client无需配置Rabbitmq相关信息，因为无需向rabbitmq发送消息，但是需要有bus-amqp依赖
+
+#### 5.3.3.其他
+
+1. 刷新时，关闭安全验证：management.security.enabled=false
+2. 开启消息跟踪spring.cloud.bus.trace.enabled=true,可以
+通过[GET]http://localhost:8887/trace 查看刷新记录
+3. 局部刷新：/bus/refresh?destination=customers:8000，其中，
+customers:8000指的是各个微服务的ApplicationContext ID。
+
 ## 6.服务链路追踪(Sleuth)
 sleuth [slu:θ] 侦探,分析服务间的调用关系
 
