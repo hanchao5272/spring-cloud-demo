@@ -14,10 +14,10 @@
 [TOC]
 
 
-## 服务注册中心与服务提供者(Eureka)
+## 1.服务注册中心与服务提供者(Eureka)
 Eureka  [juəˈri:kə] 我发现了,服务注册中心,服务提供者
 
-### Eureka Server服务注册中心(eureka-server)
+### 1.1.Eureka Server服务注册中心(eureka-server)
 
 1. 组件：web、eureka
 2. @EnableEurekaServer注解使其成为服务注册中心Eureka Server
@@ -46,7 +46,7 @@ Eureka  [juəˈri:kə] 我发现了,服务注册中心,服务提供者
     ```
 4. Eureka Server 地址：http://localhost:8761/
 
-### Eureka Server的高可用配置
+### 1.2.Eureka Server的高可用配置
 
 1. 在yml文件中用---来区分多个文件，减少配置文件个数
 2. 多个实例共用一个服务名：spring.application.name=eureka-ha
@@ -69,7 +69,7 @@ Eureka  [juəˈri:kə] 我发现了,服务注册中心,服务提供者
 --spring.profiles.active=peer2、--spring.profiles.active=peer3启动这三个注册中心服务。
 5. Eureka Server与Eureka Client的配置文件全都采用驼峰命名
 
-### Eureka Server的安全认证
+### 1.3.Eureka Server的安全认证
 
 1. 在Eureka Server中添加依赖spring-boot-starter-security
 2. 修改Eureka Server的配置，添加认证配置security
@@ -92,7 +92,7 @@ eureka:
 3. 修改Eureka Client配置，修改defaultZone=http://usr:pwd@host:ip/eureka/
 4. Eureka Server与Eureka Client的配置文件全都采用驼峰命名
 
-### Eureka Client服务提供者(eureka-hi)
+### 1.4.Eureka Client服务提供者(eureka-hi)
 
 1. 组件：web、eureka
 2. @EnableEurekaClient注解表示当前服务是一个服务提供者
@@ -104,7 +104,7 @@ eureka:
     - 解决方法：  server.renewal-percent-threshold: 0.49
 4. 测试地址：http://localhost:8762/hi?name=David
 
-## 服务消费者(Feign,service-feign)
+## 2.服务消费者(Feign,service-feign)
 Feign [feɪn] 伪装,伪Http客户端,负载均衡,可插拔注解
 
 1. 组件：web、eureka、feign
@@ -113,10 +113,10 @@ Feign [feɪn] 伪装,伪Http客户端,负载均衡,可插拔注解
 更通用，可以适用于其他服务注册中心；@EnableEurekaClient只适用于Eureka注册中心
 4. Feign自动做了负载均衡
 
-## 断路器(Hystrix,service-feign)
+## 3.断路器(Hystrix,service-feign)
 Hystrix [hɪst'rɪks]  豪猪,防御机制,防止雪崩,降级,当服务不可用时的默认方法
 
-### 断路器(Hystrix,service-feign)
+### 3.1.断路器(Hystrix,service-feign)
 
 1. Feign是自带断路器Hystrix的，配置开启
     ```
@@ -127,7 +127,7 @@ Hystrix [hɪst'rɪks]  豪猪,防御机制,防止雪崩,降级,当服务不可�
 2. 定义Feign客户端接口ScheduleServiceHi的实现类，在其中编写熔断方法
 3. 在Feign客户端接口ScheduleServiceHi接口中，指定熔断时fallback(后退)的类
 
-### 断路器仪表盘(Hystrix Dashboard,service-feign)
+### 3.2.断路器仪表盘(Hystrix Dashboard,service-feign)
 
 1. jar包引入：hystrix、hystrix-dashboard
 2. 在启动类添加@EnableHystrix、@EnableHystrixDashboard
@@ -136,7 +136,7 @@ Hystrix [hɪst'rɪks]  豪猪,防御机制,防止雪崩,降级,当服务不可�
 5. 仪表盘参数：http://localhost:8765/hystrix.stream、2000、SERVICE-FEIGN
 6. 修改application.yml,添加注册认证，并修改配置为驼峰方式
 
-### 断路器仪表盘聚合(Turbine,service-feign,service-feign-2,service-turbine)
+### 3.3.断路器仪表盘聚合(Turbine,service-feign,service-feign-2,service-turbine)
 [ˈtɜ:baɪn] 涡轮机;将若干服务的监测数据聚合起来
 
 1. 注意主类的注解顺序
@@ -159,10 +159,10 @@ turbine:
 7. turbine仪表盘访问http://localhost:8865/hystrix ，录入http://localhost:8969/turbine.stream、
 2000、[随便]，点击Monitor Stream
 
-## 路由网关(Zuul)
+## 4.路由网关(Zuul)
 Zuul 负载均衡,路由转发,过滤器
 
-### 路由转发(Routing,service-zuul)
+### 4.1.路由转发(Routing,service-zuul)
 1. 组件：web、eureka、zuul
 2. @EnableEurekaClient注解开启服务注册
 3. @EnableZuulProxy注解开启网关代理
@@ -187,17 +187,17 @@ Zuul 负载均衡,路由转发,过滤器
                 timeoutInMilliseconds: 60000
     ```
 
-### 过滤器(ZuuFilter,service-zuul)
+### 4.2.过滤器(ZuuFilter,service-zuul)
 
 1. 自定义过滤器继承自ZuulFilter，需重写filterType、filterOrder、shouldFilter和run方法，注解@Componet
 2. filterType表示过滤器类型，pre(路由转发之前),routing(路由之时),post(路由之后),error(发生出错之时)
 3. filterOrder表示过滤器顺序，shouldFilter表示过滤规则，run表示过滤逻辑
 
-## 配置中心与获取配置(Config)
+## 5.配置中心与获取配置(Config)
 Config,配置
 
-Spring Boot版本降低至1.5.2.RELEASE
-### 配置中心(Config Server,config-server)
+### 5.1.基础配置与手动refresh
+#### 5.1.配置中心(Config Server,config-server)
 
 1. Config Server相关jar包是spring-cloud-config-server
 2. 注解@EnableConfigServer表示此服务是配置中心
@@ -205,8 +205,6 @@ Spring Boot版本降低至1.5.2.RELEASE
 4. 配置说明(这里的注释只是说明，实际不能用中文)
     ```
     spring:
-      application:
-        name: config-srver
       cloud:
         config:
           server:
@@ -214,7 +212,7 @@ Spring Boot版本降低至1.5.2.RELEASE
               # 配置文件所在github项目路径
               uri: https://github.com/hanchao5272/spring-cloud-demo/
               # 配置文件所在目录路径
-              search-paths: spring-cloud-config-file
+              search-paths: config-repo
               # username/password
           # 配置文件所在github项目的分支
           label: master
@@ -228,45 +226,41 @@ Spring Boot版本降低至1.5.2.RELEASE
 5. 读取配置文件举例：配置文件名为config-client-dev.yml，则application=config-client，
 profile=dev，label=master。最终读取URL：http://localhost:8888/config-client/dev
 
-### 配置客户端(Config Client,config-client)
+#### 5.2.配置客户端(Config Client,config-client)
 
 1. Config Client相关jar包是spring-cloud-starter-config
 2. 注解@EnableEurekaClient进行服务注册
-3. 配置说明
+3. bootstrap.yml要早于application.yml加载，所以将config相关配置写在bootstrap.yml
+4. 配置说明
     ```
     spring:
-      application:
-        name: config-client
       cloud:
         config:
           # 配置文件所在github项目的分支
           label: master
-          # 配置文件环境：dev(开发)/test(测试)/pro(生产)
+          # 配置文件环境：dev(开发)/test(测试)/pro(生产),，对应{profile}
           profile: dev
           # 配置中心服务地址
           uri: http://localhost:8888/
+          # 配置名，对应{application}
+          name: config-client
     ```
 4. Config-Client读取Config-Server的配置，而Config-Server的配置来自于github
+5. 要开启手动刷新，需要引入jar包：actuator  ['æktʃʊeɪtə]  执行者
+6. 要开启手动刷新，需要在引用配置的相关类上，添加注解@@RefreshScope
 
-### 配置中心高可用
-
-1. 对于Config Client，因为bootstrap.properties的加载是先于
-application.properties的,所以用bootstrap.properties作为配置文件
-2. 之前Config Client配置的Config Server地址是具体IP地址，将其修改服务名，以便负载均衡
-
-
-## 服务链路追踪(Sleuth)
+## 6.服务链路追踪(Sleuth)
 sleuth [slu:θ] 侦探,分析服务间的调用关系
 
-### HTTP模式
+### 6.1.HTTP模式
 
-#### Sleuth Server(zipkin-server)
+#### 6.1.1.Sleuth Server(zipkin-server)
 
 1. Sleuth Server依赖：zipkin-server/zipkin-autoconfigure-ui
 2. @EnableZipkinServer注解表示该服务作为链路追踪中心
 3. @EnableEurekaClient注解表示该服务进行注册
 
-#### Sleuth Client(zipkin-hi/zipkin-ping/zipkin-pong)
+#### 6.1.2.Sleuth Client(zipkin-hi/zipkin-ping/zipkin-pong)
 
 1. Sleuth Client依赖：spring-cloud-starter-zipkin/zipkin-server/zipkin-autoconfigure-ui
 2. @EnableEurekaClient注解表示该服务进行注册
@@ -281,7 +275,7 @@ sleuth [slu:θ] 侦探,分析服务间的调用关系
         sampler:
           percentage: 1
     ```
-#### 缺陷
+#### 6.1.3.缺陷
 
 1. Zipkin Client向Zipkin-Server程序发送数据使用的是http的方式通信，每次发送的时候涉及到连接和发送过程，对原有业务接口调用产生较大影响。
 2. 当我们的zipkin-server程序关闭或者重启过程中，因为客户端收集信息的发送采用http的方式会被丢失。

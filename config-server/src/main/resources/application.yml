@@ -9,15 +9,29 @@ server:
   port: 8887
 spring:
   application:
-    name: config-srver
+    name: config-server
   cloud:
     config:
       server:
         git:
           uri: https://github.com/hanchao5272/spring-cloud-demo/
-          search-paths: spring-cloud-config-file
+          searchPaths: config-repo
       label: master
+#    ## 开启消息跟踪
+#    bus:
+#      trace:
+#        enabled: true
+#  ## 消息队列
+#  rabbitmq:
+#    host: localhost
+#    port: 5672
+#    username: guest
+#    password: guest
 eureka:
   client:
-    service-url:
-      default-zone: http://localhost:8761/eureka/
+    serviceUrl:
+      defaultZone: http://admin:admin@localhost:8761/eureka/
+### 刷新时，关闭安全验证
+#management:
+#  security:
+#    enabled: false
