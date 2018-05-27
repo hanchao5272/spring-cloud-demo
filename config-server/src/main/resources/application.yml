@@ -1,12 +1,6 @@
-#spring:application.name=config-server
-#server.port=8888
-#
-#spring.cloud.config.server.git.uri=https://github.com/hanchao5272/spring-cloud-demo/
-#spring.cloud.config.server.git.searchPaths=spring-cloud-config-file
-#spring.cloud.config.label=master
 server:
   #port: 8888 8887
-  port: 8887
+  port: 8888
 spring:
   application:
     name: config-server
@@ -17,21 +11,7 @@ spring:
           uri: https://github.com/hanchao5272/spring-cloud-demo/
           searchPaths: config-repo
       label: master
-#    ## 开启消息跟踪
-#    bus:
-#      trace:
-#        enabled: true
-#  ## 消息队列
-#  rabbitmq:
-#    host: localhost
-#    port: 5672
-#    username: guest
-#    password: guest
 eureka:
   client:
     serviceUrl:
       defaultZone: http://admin:admin@localhost:8761/eureka/
-### 刷新时，关闭安全验证
-#management:
-#  security:
-#    enabled: false

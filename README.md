@@ -249,6 +249,31 @@ profile=dev，label=master。最终读取URL：http://localhost:8888/config-clie
 5. 要开启手动刷新，需要引入jar包：actuator  ['æktʃʊeɪtə]  执行者
 6. 要开启手动刷新，需要在引用配置的相关类上，添加注解@@RefreshScope
 
+### 5.2.高可用配置与手动refresh
+
+1. Config Server、Config Client都需要通过@EnableEurekaClient注册服务
+2. Config Server通过修改端口号开启多个服务，形成服务集群
+3. Config Client修改spring.cloud.config的配置方式
+    ```
+    spring:
+      cloud:
+        config:
+          label: master
+          profile: dev
+          uri: http://localhost:8888/
+    ============>>>>>>>>>==================
+    spring:
+      cloud:
+        config:
+          label: master
+          profile: dev
+          discovery:
+            enabled: true
+            serviceId: config-server
+    ```
+4. 刷新时无需认证：management.security.enabled=false
+5. 注意将配置写在bootstrap.yml，优先加载
+
 ## 6.服务链路追踪(Sleuth)
 sleuth [slu:θ] 侦探,分析服务间的调用关系
 

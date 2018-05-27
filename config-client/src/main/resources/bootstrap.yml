@@ -1,28 +1,21 @@
-#server.port=8881
-#
-#spring.application.name=config-client
-#
-#spring.cloud.config.label=master
-#spring.cloud.config.profile=dev
-#spring.cloud.config.uri=http://localhost:8888/
+server:
+  # 8881 8882
+  port: 8881
 spring:
+  application:
+    name: config-client
   cloud:
     config:
       label: master
       profile: dev
-      uri: http://localhost:8887/
-      name: config-client
-#      discovery:
-#        enabled: true
-#        serviceId: config-server
-    ## 开启消息跟踪
-#    bus:
-#      trace:
-#        enabled: true
-#  ## 消息队列
-#  rabbitmq:
-#    host: localhost
-#    port: 5672
-#    username: guest
-#    password: guest
+      discovery:
+        enabled: true
+        serviceId: config-server
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://admin:admin@localhost:8761/eureka/
+management:
+  security:
+    enabled: false
 
