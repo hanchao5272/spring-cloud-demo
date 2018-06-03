@@ -1,5 +1,62 @@
 # Spring Cloud Demo
 
+最近在系统性的对Spring Cloud的基础配置进行学习。
+
+为了加深对Spring Could的掌握，也为了将记忆留存，遂将Spring Cloud的相关配置进行梳理，并整理成文。
+
+本系列文章只对Spring Cloud的基础配置进行记录，关于概念说明与源码解析请自行探索。
+
+如果文章中有任何问题，请各位道友不吝赐教，共同进步。
+
+---------------------
+### 版本说明
+在这里，对两个至关重要的版本(Spring Boot和Spring Cloud)进行统一说明：
+
+- Spring Boot版本: `1.5.2.RELEASE`
+- Spring Cloud版本: `Dalston.SR1`
+
+--------------------------
+### IDEA多实例启动说明
+在学习过程中，为了模拟服务高可用配置，需要在IDEA中对同一服务启动多个实例。
+
+关于如何实现这种多实例启动，可以参考：[Spring-Cloud笔记01:IDEA中同一个项目启动多个实例](https://blog.csdn.net/hanchao5272/article/details/80558190)
+
+-----------------
+### Maven多模块项目构建
+通过Spring Cloud构建微服务的过程中，涉及多个服务，这些服务以Maven的多模块项目构建。
+
+关于如何构建多模块的Maven项目，可以参考：[Spring-Cloud笔记02:IDEA中构建多模块的Maven项目](https://blog.csdn.net/hanchao5272/article/details/80558780)。
+
+------------
+### 章节列表(持续更新中...)
+
+- [Spring-Cloud笔记03:服务注册中心Eureka Server的简单配置、访问控制配置以及高可用配置](https://blog.csdn.net/hanchao5272/article/details/80561199)
+	- 1.简单的服务注册中心Eureka Server与服务提供者Eureka Client
+	- 2.高可用的服务注册中心Eureka Server
+	- 3.安全认证的服务注册中心Eureka Server
+- 服务消费Feign
+	- 1.负载均衡的服务消费方式Feign
+- 服务降级Hystrix
+	- 1.断路器Hystrix
+	- 2.断路器仪表盘Hystrix Dashboard
+	- 3.断路器仪表盘聚合Turbine
+- 路由网关Zuul
+	- 1.路由转发Zuul
+	- 2.过滤器ZuulFilter
+- 配置中心Config
+	- 1.基础的配置中心Config Server、配置客户端Config Client与手动刷新refresh
+	- 2.高可用的配置中心Config Server
+	- 3.配置中心的自动刷新Bus
+- 服务链路追踪Sleuth
+	- 1.HTTP模式的服务链路追踪
+	- 2.Stream模式的服务链路追踪
+
+
+
+
+
+
+--------------------
 1. 版本序列Release Trains：为了方便管理Spring Could中各种各样的依赖，制定了
 依赖集合，即版本序列。
 2. 版本序列主要包含Spring Boot和Spring Cloud的版本，具体参考http://projects.spring.io/spring-cloud/
