@@ -19,6 +19,7 @@
 	</parent>
 
 	<dependencies>
+		<!--添加安全认证-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>

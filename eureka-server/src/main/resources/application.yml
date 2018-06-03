@@ -1,19 +1,33 @@
+# 端口号
 server:
   port: 8761
+# 安全认证
 security:
+  # 开启基本安全认证
   basic:
     enabled: true
+  # 设置用户名密码
   user:
     name: admin
     password: admin
+# 服务注册相关配置
 eureka:
+  # 服务实例主机名
   instance:
     hostname: localhost
+  # 服务提供者配置
   client:
+    # 不进行注册（当服务注册中心是单点而非高考用时的配置方式）
     registerWithEureka: false
+    # 不获取注册信息（当服务注册中心是单点而非高考用时的配置方式）
     fetchRegistry: false
+    # 服务注册中心地址
     serviceUrl:
+      # 无安全认证的配置
+      # defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+      # 安全认证的配置
       defaultZone: http://${security.user.name}:${security.user.password}@${eureka.instance.hostname}:${server.port}/eureka/
+  # 服务注册中心配置
   server:
     renewalPercentThreshold: 0.49
 
